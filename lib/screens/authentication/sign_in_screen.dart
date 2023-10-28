@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:social_media_x/blocs/sign_in/sign_in_bloc.dart';
-import 'package:social_media_x/componets/height.dart';
+import 'package:social_media_x/blocs/auth/sign_in/sign_in_bloc.dart';
+import 'package:social_media_x/componets/sized_box.dart';
 import 'package:social_media_x/componets/string.dart';
 import 'package:social_media_x/componets/textfeild.dart';
 
@@ -30,7 +30,8 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<SignInBloc, SignInState>(
-      listener: (context, state) { if (state is SignInSuccess) {
+      listener: (context, state) {
+        if (state is SignInSuccess) {
           setState(() {
             signInRequired = false;
           });
@@ -39,10 +40,12 @@ class _SignInScreenState extends State<SignInScreen> {
             signInRequired = true;
           });
         } else if (state is SignInFailure) {
-          signInRequired = false;
+          setState(() {
+            signInRequired = false;
+          });
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: const Text("Error Occured"),
+              content: const Text("Invalid UserName or passWord"),
               backgroundColor: Theme.of(context).colorScheme.error,
             ),
           );
@@ -65,7 +68,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 validator: (val) {
                   if (val!.isEmpty) {
                     return 'Please Fill the Feild';
-                  } else if (emailRexExp.hasMatch(val)) {
+                  } else if (!emailRexExp.hasMatch(val)) {
                     return 'Please Enter a Valid Email';
                   }
                   return null;
@@ -88,7 +91,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 validator: (val) {
                   if (val!.isEmpty) {
                     return 'Please Fill the Field';
-                  } else if (passRexExp.hasMatch(val)) {
+                  } else if (!passRexExp.hasMatch(val)) {
                     return 'Please Enter a Valid passWord';
                   }
                   return null;

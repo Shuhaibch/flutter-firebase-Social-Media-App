@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:social_media_x/blocs/sign_up/sign_up_bloc.dart';
-import 'package:social_media_x/componets/height.dart';
+import 'package:social_media_x/blocs/auth/sign_up/sign_up_bloc.dart';
+import 'package:social_media_x/componets/sized_box.dart';
 import 'package:social_media_x/componets/string.dart';
 import 'package:user_repository/user_repository.dart';
 
@@ -103,7 +103,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 validator: (val) {
                   if (val!.isEmpty) {
                     return 'Please Fill the Feild';
-                  } else if (emailRexExp.hasMatch(val)) {
+                  } else if (!emailRexExp.hasMatch(val)) {
+                    
                     return 'Please Enter a Valid Email';
                   }
                   return null;
@@ -175,7 +176,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 validator: (val) {
                   if (val!.isEmpty) {
                     return 'Please Fill the Field';
-                  } else if (passRexExp.hasMatch(val)) {
+                  } else if (!passRexExp.hasMatch(val)) {
                     return 'Please Enter a Valid passWord';
                   }
                   return null;
@@ -268,7 +269,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 validator: (val) {
                   if (val!.isEmpty) {
                     return 'Please Fill the Field';
-                  } else if (passRexExp.hasMatch(val)) {
+                  } else if (!passRexExp.hasMatch(val)) {
                     return 'Please Enter a Valid passWord';
                   } else if (identical(val, passWordCtrl)) {
                     return 'Password and Confirm password are not same';

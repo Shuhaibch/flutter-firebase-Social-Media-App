@@ -2,10 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:social_media_x/blocs/authenticaton_bloc/authentication_bloc.dart';
-import 'package:social_media_x/blocs/sign_in/sign_in_bloc.dart';
-import 'package:social_media_x/blocs/sign_up/sign_up_bloc.dart';
-import 'package:social_media_x/componets/height.dart';
+import 'package:social_media_x/blocs/auth/authenticaton_bloc/authentication_bloc.dart';
+import 'package:social_media_x/blocs/auth/sign_in/sign_in_bloc.dart';
+import 'package:social_media_x/blocs/auth/sign_up/sign_up_bloc.dart';
+import 'package:social_media_x/componets/sized_box.dart';
 import 'package:social_media_x/screens/authentication/sign_in_screen.dart';
 import 'package:social_media_x/screens/authentication/sign_up_screen.dart';
 

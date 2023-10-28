@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:user_repository/src/models/my_user.dart';
 
@@ -16,4 +15,6 @@ abstract class UserRepository {
   Future<void> setUserData(MyUser myUser);
 
   Future<MyUser> getUserData(String userId);
+
+  Future<String> upLoadPicture(String file, String userId);
 }

@@ -1,38 +1,40 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:equatable/equatable.dart';
 import 'package:user_repository/src/entities/my_user_entity.dart';
 
-/// model for userdata 
+/// model for userdata
 class MyUser extends Equatable {
   final String id;
   final String email;
   final String name;
-  final String? picture;
+   String? picture;
 
-  const MyUser({
+   MyUser({
     required this.id,
-    required this.name,
     required this.email,
+    required this.name,
     this.picture,
   });
 
   //Empty User represent the unauthenticated User
-  static const empty = MyUser(
+  static final empty = MyUser(
     id: '',
-    name: '',
     email: '',
+    name: '',
     picture: '',
   );
 
   /// To Modify user parameter
   MyUser copyWith({
     String? id,
-    String? name,
     String? email,
+    String? name,
     String? picture,
   }) {
     return MyUser(
       id: id ?? this.id,
-      name: email ?? this.email,
+      name: name ?? this.name,
       email: email ?? this.email,
       picture: picture ?? this.picture,
     );

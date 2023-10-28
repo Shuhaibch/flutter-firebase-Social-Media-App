@@ -27,3 +27,34 @@ SizedBox kheight70 = const SizedBox(
 SizedBox kheight80 = const SizedBox(
   height: 80,
 );
+
+SizedBox kWidth10 = const SizedBox(
+  width: 10,
+);
+SizedBox kWidth20 = const SizedBox(
+  width: 20,
+);
+SizedBox kWidth25 = const SizedBox(
+  width: 25,
+);
+SizedBox kWidth35 = const SizedBox(
+  width: 35,
+);
+SizedBox kWidth30 = const SizedBox(
+  width: 30,
+);
+SizedBox kWidth40 = const SizedBox(
+  width: 40,
+);
+SizedBox kWidth50 = const SizedBox(
+  width: 50,
+);
+SizedBox kWidth60 = const SizedBox(
+  width: 60,
+);
+SizedBox kWidth70 = const SizedBox(
+  width: 70,
+);
+SizedBox kWidth80 = const SizedBox(
+  width: 80,
+);
