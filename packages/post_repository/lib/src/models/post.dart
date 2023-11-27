@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:post_repository/src/entities/my_post_entity.dart';
 import 'package:user_repository/user_repository.dart';
 
@@ -6,12 +7,13 @@ class Post {
   String post;
   DateTime createdAt;
   MyUser myUser;
-
+  String? postImg;
   Post({
     required this.postId,
     required this.post,
     required this.createdAt,
     required this.myUser,
+    this.postImg,
   });
 
   //Empty User represent the unauthenticated User
@@ -20,6 +22,7 @@ class Post {
     post: '',
     createdAt: DateTime.now(),
     myUser: MyUser.empty,
+    postImg: '',
   );
 
   /// To Modify user parameter
@@ -28,12 +31,14 @@ class Post {
     String? post,
     DateTime? createdAt,
     MyUser? myUser,
+    String? postImg,
   }) {
     return Post(
       postId: postId ?? this.postId,
       post: post ?? this.post,
       createdAt: createdAt ?? this.createdAt,
       myUser: myUser ?? this.myUser,
+      postImg: postImg ?? this.postImg,
     );
   }
 
@@ -50,6 +55,7 @@ class Post {
       post: post,
       createdAt: createdAt,
       myUser: myUser,
+      postImg: postImg,
     );
   }
 
@@ -60,6 +66,7 @@ class Post {
       createdAt: entity.createdAt,
       post: entity.post,
       myUser: entity.myUser,
+      postImg: entity.postImg,
     );
   }
 

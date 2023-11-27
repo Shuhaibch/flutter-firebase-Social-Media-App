@@ -19,6 +19,7 @@ final class PostCreateSuccess extends PostState {
 
 final class PostCreateFailed extends PostState {}
 
+//* Get Post
 final class GetPostSuccess extends PostState {
   final List<Post> post;
 
@@ -28,3 +29,15 @@ final class GetPostSuccess extends PostState {
 final class GetPostFailed extends PostState {}
 
 final class GetPostLoading extends PostState {}
+
+//* Create Post With Image
+
+final class PostImageCreateLoading extends PostState {}
+
+final class PostImageCreateSuccess extends PostState {
+  final Post post;
+
+  const PostImageCreateSuccess(this.post);
+}
+
+final class PostImageCreateFailed extends PostState {}

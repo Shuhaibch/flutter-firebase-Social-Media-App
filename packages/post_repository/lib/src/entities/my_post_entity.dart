@@ -6,12 +6,14 @@ class PostEntity {
   String post;
   DateTime createdAt;
   MyUser myUser;
+  String? postImg;
 
   PostEntity({
     required this.postId,
     required this.post,
     required this.createdAt,
     required this.myUser,
+    this.postImg,
   });
 
   /// To the firebase
@@ -21,6 +23,7 @@ class PostEntity {
       'post': post,
       'createdAt': createdAt,
       'myUser': myUser.toEntity().toDocument(),
+      'postImg': postImg,
     };
   }
 
@@ -31,6 +34,7 @@ class PostEntity {
       post: doc['post'] as String,
       createdAt: (doc['createdAt'] as Timestamp).toDate(),
       myUser: MyUser.fromEntity(MyUserEntity.formDocument(doc['myUser'])),
+      postImg: doc['postImg'] as String,
     );
   }
 

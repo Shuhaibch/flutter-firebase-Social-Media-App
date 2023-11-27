@@ -14,3 +14,10 @@ class CreatePost extends PostEvent {
 
   const CreatePost(this.post);
 }
+
+class CreateImagePost extends PostEvent {
+  final Post post;
+  final String image;
+
+  const CreateImagePost(this.post, this.image);
+}

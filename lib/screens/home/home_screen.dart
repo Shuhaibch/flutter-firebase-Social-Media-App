@@ -7,6 +7,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:post_repository/post_repository.dart';
+import 'package:social_media_x/screens/profile/profile_screen.dart';
 import 'package:user_repository/user_repository.dart';
 
 import 'package:social_media_x/blocs/auth/my_user_bloc/my_user_bloc.dart';
@@ -116,22 +117,37 @@ class _HomeScreenState extends State<HomeScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Container(
-                                padding: const EdgeInsets.only(
-                                  top: 15,
-                                ),
-                                width: 40,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                      post.myUser.picture!,
-                                    ),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
+                              GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ProfileScreen(),
+                                    ));
+                                  },
+                                  child: post.myUser.picture!.isNotEmpty
+                                      ? Container(
+                                          padding: const EdgeInsets.only(
+                                            top: 15,
+                                          ),
+                                          width: 40,
+                                          height: 40,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                              image: NetworkImage(
+                                                post.myUser.picture!,
+                                              ),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        )
+                                      : CircleAvatar(
+                                          backgroundColor: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
+                                          child: const Icon(Icons.person),
+                                        )),
                               kWidth10,
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -192,200 +208,179 @@ class _HomeScreenState extends State<HomeScreen> {
 
   AppBar appbar(BuildContext context) {
     return AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            title: BlocBuilder<MyUserBloc, MyUserState>(
-              builder: (context, state) {
-                if (state.status == MyUserStatus.success) {
-                  return Row(
-                    children: [
-                      SizedBox(
-                        child: state.user!.picture == ''
-                            ? GestureDetector(
-                                onTap: () async {
-                                  final ImagePicker picker = ImagePicker();
-                                  final XFile? image = await picker.pickImage(
-                                      source: ImageSource.gallery,
-                                      maxHeight: 500,
-                                      maxWidth: 500,
-                                      imageQuality: 40);
-                                  if (image != null) {
-                                    CroppedFile? croppedFile =
-                                        await ImageCropper().cropImage(
-                                      sourcePath: image.path,
-                                      aspectRatio: const CropAspectRatio(
-                                          ratioX: 1, ratioY: 1),
-                                      aspectRatioPresets: [
-                                        CropAspectRatioPreset.square
-                                      ],
-                                      uiSettings: [
-                                        AndroidUiSettings(
-                                            toolbarTitle: 'Cropper',
-                                            toolbarColor: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                            toolbarWidgetColor: Colors.white,
-                                            initAspectRatio:
-                                                CropAspectRatioPreset
-                                                    .original,
-                                            lockAspectRatio: false),
-                                        IOSUiSettings(
-                                          title: 'Cropper',
-                                        ),
-                                      ],
-                                    );
-                                    if (croppedFile != null) {
-                                      setState(
-                                        () {
-                                          context
-                                              .read<UpdateUserInfoBloc>()
-                                              .add(UploadPicture(
-                                                  croppedFile.path,
-                                                  context
-                                                      .read<MyUserBloc>()
-                                                      .state
-                                                      .user!
-                                                      .id));
-                                        },
-                                      );
-                                    }
-                                  }
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.only(
-                                    top: 15,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      title: BlocBuilder<MyUserBloc, MyUserState>(
+        builder: (context, state) {
+          if (state.status == MyUserStatus.success) {
+            return Row(
+              children: [
+                SizedBox(
+                  child: state.user!.picture == ''
+                      ? GestureDetector(
+                          onTap: () async {
+                            final ImagePicker picker = ImagePicker();
+                            final XFile? image = await picker.pickImage(
+                              source: ImageSource.gallery,
+                              maxHeight: 500,
+                              maxWidth: 500,
+                              imageQuality: 40,
+                            );
+                            if (image != null) {
+                              CroppedFile? croppedFile =
+                                  await ImageCropper().cropImage(
+                                sourcePath: image.path,
+                                aspectRatio:
+                                    const CropAspectRatio(ratioX: 1, ratioY: 1),
+                                aspectRatioPresets: [
+                                  CropAspectRatioPreset.square
+                                ],
+                                uiSettings: [
+                                  AndroidUiSettings(
+                                      toolbarTitle: 'Cropper',
+                                      toolbarColor:
+                                          Theme.of(context).colorScheme.primary,
+                                      toolbarWidgetColor: Colors.white,
+                                      initAspectRatio:
+                                          CropAspectRatioPreset.original,
+                                      lockAspectRatio: false),
+                                  IOSUiSettings(
+                                    title: 'Cropper',
                                   ),
-                                  width: 50,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.grey[500],
+                                ],
+                              );
+                              if (croppedFile != null) {
+                                setState(
+                                  () {
+                                    context.read<UpdateUserInfoBloc>().add(
+                                        UploadPicture(
+                                            croppedFile.path,
+                                            context
+                                                .read<MyUserBloc>()
+                                                .state
+                                                .user!
+                                                .id));
+                                  },
+                                );
+                              }
+                            }
+                          },
+                          child: CircleAvatar(
+                            radius: 25,
+                            backgroundColor: Colors.grey,
+                            child: Icon(
+                              Icons.person,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                        )
+                      : GestureDetector(
+                          onTap: () async {
+                            final ImagePicker picker = ImagePicker();
+                            final XFile? image = await picker.pickImage(
+                                source: ImageSource.gallery,
+                                maxHeight: 500,
+                                maxWidth: 500,
+                                imageQuality: 40);
+                            if (image != null) {
+                              CroppedFile? croppedFile =
+                                  await ImageCropper().cropImage(
+                                sourcePath: image.path,
+                                aspectRatio:
+                                    const CropAspectRatio(ratioX: 1, ratioY: 1),
+                                aspectRatioPresets: [
+                                  CropAspectRatioPreset.square
+                                ],
+                                uiSettings: [
+                                  AndroidUiSettings(
+                                      toolbarTitle: 'Cropper',
+                                      toolbarColor:
+                                          Theme.of(context).colorScheme.primary,
+                                      toolbarWidgetColor: Colors.white,
+                                      initAspectRatio:
+                                          CropAspectRatioPreset.original,
+                                      lockAspectRatio: false),
+                                  IOSUiSettings(
+                                    title: 'Cropper',
                                   ),
-                                  child: const Icon(
-                                    Icons.person_2,
-                                  ),
+                                ],
+                              );
+                              if (croppedFile != null) {
+                                setState(
+                                  () {
+                                    context.read<UpdateUserInfoBloc>().add(
+                                          UploadPicture(
+                                            croppedFile.path,
+                                            context
+                                                .read<MyUserBloc>()
+                                                .state
+                                                .user!
+                                                .id,
+                                          ),
+                                        );
+                                  },
+                                );
+                              }
+                            }
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.only(
+                              top: 15,
+                            ),
+                            width: 50,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                  state.user!.picture!,
                                 ),
-                              )
-                            : GestureDetector(
-                                onTap: () async {
-                                  final ImagePicker picker = ImagePicker();
-                                  final XFile? image = await picker.pickImage(
-                                      source: ImageSource.gallery,
-                                      maxHeight: 500,
-                                      maxWidth: 500,
-                                      imageQuality: 40);
-                                  if (image != null) {
-                                    CroppedFile? croppedFile =
-                                        await ImageCropper().cropImage(
-                                      sourcePath: image.path,
-                                      aspectRatio: const CropAspectRatio(
-                                          ratioX: 1, ratioY: 1),
-                                      aspectRatioPresets: [
-                                        CropAspectRatioPreset.square
-                                      ],
-                                      uiSettings: [
-                                        AndroidUiSettings(
-                                            toolbarTitle: 'Cropper',
-                                            toolbarColor: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                            toolbarWidgetColor: Colors.white,
-                                            initAspectRatio:
-                                                CropAspectRatioPreset
-                                                    .original,
-                                            lockAspectRatio: false),
-                                        IOSUiSettings(
-                                          title: 'Cropper',
-                                        ),
-                                      ],
-                                    );
-                                    if (croppedFile != null) {
-                                      setState(
-                                        () {
-                                          context
-                                              .read<UpdateUserInfoBloc>()
-                                              .add(
-                                                UploadPicture(
-                                                  croppedFile.path,
-                                                  context
-                                                      .read<MyUserBloc>()
-                                                      .state
-                                                      .user!
-                                                      .id,
-                                                ),
-                                              );
-                                        },
-                                      );
-                                    }
-                                  }
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.only(
-                                    top: 15,
-                                  ),
-                                  width: 50,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                      image: NetworkImage(
-                                        state.user!.picture!,
-                                      ),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
+                                fit: BoxFit.cover,
                               ),
-                      ),
-                      kWidth10,
-                      Text(
-                        state.user!.name,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      )
-                    ],
-                  );
-                }
-                return Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.only(
-                        top: 15,
-                      ),
-                      width: 50,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.grey[500],
-                      ),
-                      child: Center(
-                        child: Icon(
-                          Icons.person,
-                          color: Colors.grey[800],
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    kWidth20,
-                    const Text(
-                      "Loading...",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    )
-                  ],
-                );
-              },
-            ),
-            actions: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  right: 15.0,
                 ),
-                child: IconButton(
-                  icon: const Icon(Icons.logout),
-                  onPressed: () {
-                    context.read<SignInBloc>().add(SignOutRequired());
-                  },
+                kWidth10,
+                Text(
+                  state.user!.name,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                )
+              ],
+            );
+          }
+          return Row(
+            children: [
+              CircleAvatar(
+                radius: 25,
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                child: Icon(
+                  Icons.person,
+                  color: Theme.of(context).colorScheme.background,
                 ),
               ),
+              kWidth10,
+              const Text(
+                "Loading...",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              )
             ],
           );
+        },
+      ),
+      actions: [
+        Padding(
+          padding: const EdgeInsets.only(
+            right: 15.0,
+          ),
+          child: IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () {
+              context.read<SignInBloc>().add(SignOutRequired());
+            },
+          ),
+        ),
+      ],
+    );
   }
 }

@@ -12,6 +12,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   PostBloc({required PostRepository postRepository})
       : _postRepository = postRepository,
         super(PostInitial()) {
+    //? Create Post
     on<CreatePost>((event, emit) async {
       emit(PostCreateLoading());
       try {
@@ -20,6 +21,19 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       } catch (e) {
         log(e.toString());
         emit(PostCreateFailed());
+      }
+    });
+
+    //? Create Image Post
+    on<CreateImagePost>((event, emit) async {
+      emit(PostImageCreateLoading());
+      try {
+        final Post post =
+            await _postRepository.createImagePost(event.post, event.image);
+        emit(PostImageCreateSuccess(post));
+      } catch (e) {
+        log(e.toString());
+        emit(PostImageCreateFailed());
       }
     });
 
