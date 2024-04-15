@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media_x/app_view.dart';
 import 'package:social_media_x/blocs/auth/authenticaton_bloc/authentication_bloc.dart';
+import 'package:social_media_x/blocs/auth/sign_in/sign_in_bloc.dart';
+import 'package:social_media_x/blocs/auth/sign_up/sign_up_bloc.dart';
 import 'package:user_repository/user_repository.dart';
 
 class MyApp extends StatelessWidget {
@@ -22,7 +24,13 @@ class MyApp extends StatelessWidget {
           create: (context) => AuthenticationBloc(
             myUserRepository: userRepository,
           ),
-        )
+        ),
+        BlocProvider(
+          create: (context) => SignUpBloc(userRepository: userRepository),
+        ),
+        BlocProvider(
+          create: (context) => SignInBloc(userRepository: userRepository),
+        ),
       ],
       child: const MyAppView(),
     );

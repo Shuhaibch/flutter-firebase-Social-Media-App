@@ -5,10 +5,10 @@ import 'package:social_media_x/blocs/auth/my_user_bloc/my_user_bloc.dart';
 import 'package:social_media_x/blocs/auth/sign_in/sign_in_bloc.dart';
 import 'package:social_media_x/blocs/auth/update_user_info_bloc/update_user_info_bloc.dart';
 import 'package:social_media_x/blocs/post/post_bloc/post_bloc.dart';
+import 'package:social_media_x/presentations/authentication/welcome_screen.dart';
 import 'package:social_media_x/screens/home/home_screen.dart';
-import 'package:social_media_x/screens/authentication/welcome_screen.dart';
-
 import 'blocs/auth/authenticaton_bloc/authentication_bloc.dart';
+import 'presentations/Userpage/presentation/screens/main_page.dart';
 
 class MyAppView extends StatelessWidget {
   const MyAppView({super.key});
@@ -67,7 +67,7 @@ class MyAppView extends StatelessWidget {
                     ),
                 ),
               ],
-              child: const HomeScreen(),
+              child: HomeScreen(),
             );
           } else {
             return const WelcomeScreen();

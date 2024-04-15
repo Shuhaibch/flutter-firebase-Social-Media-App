@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-///backent calls 
+///backend calls 
 class MyUserEntity extends Equatable {
   final String id;
   final String email;

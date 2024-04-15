@@ -9,14 +9,14 @@ import 'package:social_media_x/componets/sized_box.dart';
 import 'package:social_media_x/screens/authentication/sign_in_screen.dart';
 import 'package:social_media_x/screens/authentication/sign_up_screen.dart';
 
-class WelcomeScreen extends StatefulWidget {
-  const WelcomeScreen({super.key});
+class WelcomesScreen extends StatefulWidget {
+  const WelcomesScreen({super.key});
 
   @override
-  State<WelcomeScreen> createState() => _WelcomeScreenState();
+  State<WelcomesScreen> createState() => _WelcomesScreenState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen>
+class _WelcomesScreenState extends State<WelcomesScreen>
     with TickerProviderStateMixin {
   late TabController tabController;
   static String greeting = "Welcome Back !";
@@ -89,7 +89,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       greeting = "Hey There !";
                     });
                   }
-                },
+                }, 
               ),
               Expanded(
                 child: TabBarView(

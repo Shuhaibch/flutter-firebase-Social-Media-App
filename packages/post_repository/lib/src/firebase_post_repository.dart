@@ -4,10 +4,9 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:post_repository/post_repository.dart';
-import 'package:post_repository/src/models/post.dart';
-import 'package:post_repository/src/post_repo.dart';
 import 'package:uuid/uuid.dart';
 
+var uuid = const Uuid();
 class FirebasePostRepository implements PostRepository {
   final postColloction = FirebaseFirestore.instance.collection('posts');
   final userColloction = FirebaseFirestore.instance.collection('user');
@@ -34,7 +33,7 @@ class FirebasePostRepository implements PostRepository {
       log(e.toString());
       rethrow;
     }
-  }
+  } 
 
   @override
   Future<String> uploadPicturePost(String file, String userId) async {
